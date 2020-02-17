@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+
+component rosnode{
+    component highLevelInterface
+    component driver
+    [highLevelInterface] -right-( IMove
+    [highLevelInterface] -right-( IStop
+    [driver] -left- IMove
+    [driver] -left- IStop
+    [driver] -right- writeMessage
+}
+
+IInteractRobot <- [highLevelInterface]
+
+component robotArm{
+    component SCC32U
+    component arm
+    [SCC32U] -left-( writeMessage
+    [arm] -right-( writePosition
+    [SCC32U] -left- writePosition
+}
+
+@enduml
