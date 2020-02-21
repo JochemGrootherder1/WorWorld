@@ -1,22 +1,19 @@
 @startuml
-top to bottom direction
+left to right direction
 
-Actor MotionPlanner
-Actor Arm
+Actor motionPlanner
+Actor gebruiker
 
-rectangle HighLevelInterface {
-    MotionPlanner -> (Stuur noodstop)
-    MotionPlanner -> (Stuur standaard positie)
-    MotionPlanner -> (Stuur positie inclusief tijd)
-    (Roep driver aan) .-right-> (Stuur positie inclusief tijd) : extend
-    (Roep driver aan) .-right-> (Stuur noodstop) : extend
-    (Roep driver aan) .-right-> (Stuur standaard positie) : extend
+rectangle robotArm{
+    (Configureer offset)
+    (Beweeg naar positie)
+    (Verander snelheid)
+    (Noodstop)
+    (Weergeef informatie)
 }
 
-rectangle Driver {
-    Arm -left-> (Verstuur bericht naar arm)
-    (Controleer bericht) .> (Roep driver aan) : include
-    (Controleer bericht) .> (Verstuur bericht naar arm) : extend
-}
-
+gebruiker -- (Configureer offset)
+motionPlanner -- (Beweeg naar positie)
+(Beweeg naar positie) <--(Verander snelheid) : extends
+motionPlanner -- (Noodstop)
 @enduml

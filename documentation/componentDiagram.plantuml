@@ -1,32 +1,32 @@
 @startuml
-top to bottom direction
+left to right direction
 
-component MotionPlanner {
-    [MotionPlanner] -( IPreDefinedPosition
-    [MotionPlanner] -( IConfigPosition
-    [MotionPlanner] -( IEmergencyStop
-}
+
+    [MotionPlanner] --( IPreDefinedPosition
+    [MotionPlanner] --( IConfigPosition
+    [MotionPlanner] --( IEmergencyStop
+
 
 component rosnode{
     component highLevelInterface
-    [highLevelInterface] -( IMove
-    [highLevelInterface] -( IStop
-    [highLevelInterface] -left- IPreDefinedPosition
-    [highLevelInterface] -left- IConfigPosition
-    [highLevelInterface] -left- IEmergencyStop
+    [highLevelInterface] --( IMove
+    [highLevelInterface] --( IStop
+    [highLevelInterface] -- IPreDefinedPosition
+    [highLevelInterface] -- IConfigPosition
+    [highLevelInterface] -- IEmergencyStop
     
     component driver
-    [driver] -left- IMove
-    [driver] -left- IStop
-    [driver] -right- writeMessage
+    [driver] -- IMove
+    [driver] -- IStop
+    [driver] -- writeMessage
 }
 
 component robotArm{
+    component Arm
     component SCC32U
-    component arm
-    [SCC32U] -right-( writeMessage
-    [arm] -( writePosition
-    [SCC32U] -left- writePosition
+    [SCC32U] --( writeMessage
+    [Arm] --( writePosition
+    [SCC32U] -- writePosition
 }
 
 @enduml
