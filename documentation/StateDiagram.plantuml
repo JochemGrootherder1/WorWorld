@@ -1,0 +1,42 @@
+@startuml
+
+left to right direction
+
+state Startup
+Startup : Entry
+Startup : Do / "Initialiseer"
+Startup : Exit / ""
+
+state Moving
+
+state Park
+
+state Calibreer
+
+state Idle
+
+
+
+state Noodstop
+
+[*] --> Startup
+Startup --> Park : [initialized == true]
+Park --> Idle 
+Park --> Calibreer
+Calibreer --> Idle
+Calibreer --> Noodstop
+Moving --> Idle
+Moving --> Park
+Idle --> Moving
+Idle --> Park
+
+Startup --> Noodstop
+Idle --> Noodstop
+Moving --> Noodstop
+Park --> Noodstop
+
+Noodstop --> [*]
+Park --> [*]
+
+@enduml
+
