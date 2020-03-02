@@ -1,0 +1,11 @@
+@startuml
+
+actor Gebruiker
+actor Servo
+rectangle Arm {
+    Gebruiker -> (Stuur servo positie)
+        (Beweeg arm) .> (Stuur servo positie) :extends
+    Servo -> (Beweeg arm)
+}
+
+@enduml

@@ -1,0 +1,19 @@
+echo -ne '​​#0 P500 T2000 #1 P2000 T1000 #2 P2000 T2500 #3 P700 T1000 #4 P2000 T1200 #5 P1550 T1000 \r\n' > /dev/ttyUSB0
+
+#0 = Base
+#1 = Shoulder
+#2 = Elbow
+#3 = Wrist
+#4 = Gripper
+#5 = Wrist rotate
+
+
+
+
+Joint	Straight up	Ready	Park
+#0	1500		1500	1500
+#1	1500		1850	2000
+#2	650		1700	2000
+#3	1550		1400	700
+#4	2500		2500	2500
+#5	1550		1550	1550			
