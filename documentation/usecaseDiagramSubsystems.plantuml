@@ -1,4 +1,7 @@
-@startuml
+@startuml useCaseDiagram
+left header
+<font size=20 color=black>Robotarm Use case diagram </font>
+endheader
 left to right direction
 
 Actor User
