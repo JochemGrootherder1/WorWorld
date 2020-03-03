@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+    [MotionPlanner] --( IAction
+
+
+component rosnode{
+    component highLevelInterface
+    [highLevelInterface] --( Action
+    [highLevelInterface] -- IAction
+    
+    component driver
+    [driver] -- Action
+
+}
+    driver --( IArmAction
+component robotArm{
+}
+    robotArm -- IArmAction
+
+@enduml

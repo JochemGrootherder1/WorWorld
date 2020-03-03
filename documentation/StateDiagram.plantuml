@@ -1,0 +1,59 @@
+@startuml
+
+left to right direction
+
+state Startup
+Startup : Entry /
+Startup : Do / "Initialiseer (read configuration)"
+Startup : Exit /
+
+state Moving
+Moving : Entry /
+Moving : Do / "moveToPosition(newPosition)"
+Moving : Exit/ "Check current position"
+
+state Park
+Park : Entry /
+Park : Do / "Move to park position"
+Park : Exit /
+
+state Calibrate
+Calibrate : Entry / 
+Calibrate : Do / "calibrate"
+Calibrate : Exit / "Check current position"
+
+state Idle
+Idle : Entry /
+Idle : Do / 
+Idle : Exit /
+
+state emergencyStop
+emergencyStop : Entry /
+emergencyStop : Do /
+emergencyStop : Exit /
+
+
+[*] --> Startup
+Startup --> Park : [initialized == true]
+Park --> Moving : move 
+Park --> Calibrate : calibrate
+Calibrate --> Idle : [calibrated == true]
+Moving --> Idle : [currentPosition == newPosition]
+Moving --> Park : [currentPosition == parkPosition]
+Idle --> Moving : move
+Idle --> Park : moveToPark
+Calibrate --> Moving : move
+Moving --> Calibrate : [currentPosition == calibrationPosition]
+Calibrate --> Park : [calibrated == true && currentPosition == parkPosition]
+
+Calibrate --> emergencyStop : emergencyStop
+Startup --> emergencyStop : emergencyStop
+Idle --> emergencyStop : emergencyStop
+Moving --> emergencyStop : emergencyStop
+Park --> emergencyStop : emergencyStop
+
+emergencyStop --> [*] : stop
+Park --> [*] : stop
+
+@enduml
+
