@@ -1,0 +1,12 @@
+Requirements:
+Elke vrijheidsgraad moet worden ontsloten
+De snelheid moet aangepast kunnen worden
+Een nieuwe locatie moet binnen 2.3 seconden bereikt zijn
+Er moet een offset ingesteld kunnen worden
+
+Er moeten voorgeprogrammeerde posities zijn
+
+Er moet een noodstop zijn
+De ranges van de servo's moeten veilig zijn 
+Bij opstarten is de verplaatsingsnelheid gelimiteerd naar de helft van de maximum snelheid
+
