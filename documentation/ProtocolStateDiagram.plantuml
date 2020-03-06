@@ -10,10 +10,13 @@ State Idle
 State Park
 State EmergencyStop
 
-[*]-> Park : [Initialized] done
+[*]-> Park : [configFound == true] done
+[*]-> Calibrate : [configFound =false] done
 Park --> Moving : move
 Moving --> Idle : [currentPosition == newPosition] positionReached [moving == false]
-
+Calibrate --> Moving : move
+Moving --> Calibrate : [currentPosition == calibratePosition] positionReached 
+Calibrate --> Park : [initialized == true] park
 Park --> EmergencyStop : emergencyStop
 Moving --> EmergencyStop : emergencyStop
 Idle --> EmergencyStop : emergencyStop

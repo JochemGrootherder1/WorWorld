@@ -1,0 +1,14 @@
+High level driver:
+    Graden -> PWM
+    ROS infrastructuur
+    Input parsen
+
+Low level driver:
+    State machine
+    limitaties PWM
+    Serieel versturen berichten
+    Configuratie afhandelen
+    Op ROS info aangeven welke state hij zit
+    Op ROS debug aangeven welke events plaatsvinden
+
+    Queue?

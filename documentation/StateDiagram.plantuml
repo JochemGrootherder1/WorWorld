@@ -1,4 +1,4 @@
-@startuml
+@startuml stateDiagram
 left header
 <font size=30 color=black>RobotArm State diagram </font>
 endheader
@@ -14,15 +14,15 @@ Moving : Entry /
 Moving : Do / "moveToPosition(newPosition)"
 Moving : Exit/ "Check current position"
 
-state Park
-Park : Entry /
-Park : Do / "Move to park position"
-Park : Exit /
-
 state Calibrate
 Calibrate : Entry / 
 Calibrate : Do / "calibrate"
 Calibrate : Exit / "Check current position"
+
+state Park
+Park : Entry /
+Park : Do / "Move to park position"
+Park : Exit /
 
 state Idle
 Idle : Entry /
@@ -36,10 +36,9 @@ emergencyStop : Exit /
 
 
 [*] --> Startup
-Startup --> Park : [initialized == true] park
-Park --> Moving : move 
-Park --> Calibrate : calibrate
-Calibrate --> Idle : [calibrated == true] idle
+Startup -> Calibrate : [configFound == false] calibrate
+Startup -> Park : [configFound == true] park
+Park ---> Moving : move 
 Moving --> Idle : [currentPosition == newPosition] idle
 Moving --> Park : [currentPosition == parkPosition] park
 Idle --> Moving : move
@@ -54,7 +53,7 @@ Idle --> emergencyStop : emergencyStop
 Moving --> emergencyStop : emergencyStop
 Park --> emergencyStop : emergencyStop
 
-emergencyStop --> [*] : stop
+emergencyStop -> [*] : stop
 Park --> [*] : stop
 
 @enduml
