@@ -1,0 +1,26 @@
+@startuml protocolStateMachine
+
+left header
+<font size=20 color=black>Robotarm Protocol state diagram{protocol} </font>
+endheader
+
+left to right direction
+State Moving
+State Idle
+State Park
+State EmergencyStop
+
+[*]-> Park : [configFound == true] done
+[*]-> Calibrate : [configFound =false] done
+Park --> Moving : move
+Moving --> Idle : [currentPosition == newPosition] positionReached [moving == false]
+Calibrate --> Moving : move
+Moving --> Calibrate : [currentPosition == calibratePosition] positionReached 
+Calibrate --> Park : [initialized == true] park
+Park --> EmergencyStop : emergencyStop
+Moving --> EmergencyStop : emergencyStop
+Idle --> EmergencyStop : emergencyStop
+
+Park --> [*] :  turnOff
+EmergencyStop --> [*] : stop
+@enduml

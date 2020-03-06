@@ -1,5 +1,7 @@
-@startuml
-
+@startuml stateDiagram
+left header
+<font size=30 color=black>RobotArm State diagram </font>
+endheader
 left to right direction
 
 state Startup
@@ -12,15 +14,15 @@ Moving : Entry /
 Moving : Do / "moveToPosition(newPosition)"
 Moving : Exit/ "Check current position"
 
-state Park
-Park : Entry /
-Park : Do / "Move to park position"
-Park : Exit /
-
 state Calibrate
 Calibrate : Entry / 
 Calibrate : Do / "calibrate"
 Calibrate : Exit / "Check current position"
+
+state Park
+Park : Entry /
+Park : Do / "Move to park position"
+Park : Exit /
 
 state Idle
 Idle : Entry /
@@ -34,17 +36,16 @@ emergencyStop : Exit /
 
 
 [*] --> Startup
-Startup --> Park : [initialized == true]
-Park --> Moving : move 
-Park --> Calibrate : calibrate
-Calibrate --> Idle : [calibrated == true]
-Moving --> Idle : [currentPosition == newPosition]
-Moving --> Park : [currentPosition == parkPosition]
+Startup -> Calibrate : [configFound == false] calibrate
+Startup -> Park : [configFound == true] park
+Park ---> Moving : move 
+Moving --> Idle : [currentPosition == newPosition] idle
+Moving --> Park : [currentPosition == parkPosition] park
 Idle --> Moving : move
 Idle --> Park : moveToPark
 Calibrate --> Moving : move
-Moving --> Calibrate : [currentPosition == calibrationPosition]
-Calibrate --> Park : [calibrated == true && currentPosition == parkPosition]
+Moving --> Calibrate : [currentPosition == calibrationPosition] calibrate
+Calibrate --> Park : [calibrated == true && currentPosition == parkPosition] park
 
 Calibrate --> emergencyStop : emergencyStop
 Startup --> emergencyStop : emergencyStop
@@ -52,7 +53,7 @@ Idle --> emergencyStop : emergencyStop
 Moving --> emergencyStop : emergencyStop
 Park --> emergencyStop : emergencyStop
 
-emergencyStop --> [*] : stop
+emergencyStop -> [*] : stop
 Park --> [*] : stop
 
 @enduml

@@ -1,4 +1,7 @@
-@startuml
+@startuml componentDiagram
+left header
+<font size=20 color=black>Robotarm Component diagram </font>
+endheader
 left to right direction
 
     [MotionPlanner] --( IAction
