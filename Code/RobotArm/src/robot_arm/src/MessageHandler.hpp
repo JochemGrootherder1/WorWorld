@@ -5,6 +5,7 @@ class MessageHandler {
     public:
         MessageHandler();
         virtual ~MessageHandler();
+        void parseMessage();
 };
 
 #endif
