@@ -44,7 +44,7 @@ Moving --> Park : [currentPosition == parkPosition] park
 Idle --> Moving : move
 Idle --> Park : moveToPark
 Calibrate --> Moving : move
-Moving --> Calibrate : [currentPosition == calibrationPosition] calibrate
+Moving --> Calibrate : [currentPosition == newPosition] calibrate
 Calibrate --> Park : [calibrated == true && currentPosition == parkPosition] park
 
 Calibrate --> emergencyStop : emergencyStop

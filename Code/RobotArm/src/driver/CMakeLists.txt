@@ -202,3 +202,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+FILE(GLOB Sources src/*.cpp)
+add_executable(Driver ${Sources})
+target_link_libraries(Driver ${catkin_LIBRARIES})
