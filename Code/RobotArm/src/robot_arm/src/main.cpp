@@ -3,8 +3,9 @@
 #include "MessageReceiver.hpp"
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "High level driver");
+    ros::init(argc, argv, "Highleveldriver");
 
-    MessageReceiver messageReceiver;
+    MessageHandler messageHandler;
+    MessageReceiver messageReceiver(&messageHandler);
     messageReceiver.startServer();
 }

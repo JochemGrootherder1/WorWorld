@@ -2,7 +2,6 @@ Position:
 
 format:     servo:position:time,
             servo:position,
-            preprogrammedPosition
             emergencyStop
             calibrate
             offset:valueOfOffset

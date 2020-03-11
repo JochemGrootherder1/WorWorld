@@ -1,2 +1,5 @@
 build/
 devel/
+install/
+
+.vscode/settings.json
