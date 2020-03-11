@@ -10,6 +10,10 @@
 #define NR_OF_ALLOWED_SERVO_TYPES 6
 #define NR_OF_OTHER_MESSAGE_TYPES 5
 
+struct allowedAngles {
+
+};
+
 class MessageHandler {
     public:
         MessageHandler();
