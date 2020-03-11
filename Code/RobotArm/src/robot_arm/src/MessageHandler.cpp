@@ -1,5 +1,5 @@
 #include "MessageHandler.hpp"
-#include "driver/Test.hpp"
+#include "driver/States.hpp"
 #include <iostream>
 
 MessageHandler::MessageHandler() : messageHandler(&MessageHandler::handleMessages, this){
@@ -115,11 +115,6 @@ void MessageHandler::handleMessages() {
                 std::cout << "position" << std::endl;
                 messagesMutex.unlock();
                 // call position function
-
-                // test code
-                Test test;
-                test.func();
-                // end test code
             } else if (messages.front().getMessageType() == PreprogrammedPosition) {
                 std::cout << "preprogrammed position" << std::endl;
                 messagesMutex.unlock();

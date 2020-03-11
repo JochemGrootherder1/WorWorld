@@ -12,3 +12,12 @@ Low level driver:
     Op ROS debug aangeven welke events plaatsvinden
 
     Queue?
+
+
+Het configuratiebestand moet als argument meegegeven worden bij het opstarten van de applicatie
+Highlevel driver leest dit argument uit
+Lowlevel driver leest configuratie uit als deze bestaat zoniet naar calibrate state
+
+
+
+Events 
