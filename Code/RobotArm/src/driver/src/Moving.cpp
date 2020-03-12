@@ -20,8 +20,7 @@ Moving::Moving(Machine* machine) : State(machine)
     std::array<std::string, 6> joints = {"Base", "Shoulder", "Elbow", "Wrist", "Gripper", "Wrist Rotate"};
     for(unsigned short i = 0; i < machine->getParkPosition().size(); ++i) 
     {
-        
-        positionToMoveTo.insert(std::make_pair(joints.at(i), std::make_pair(i, machine->getParkPosition().at(i))));
+        positionToMoveTo.insert(std::make_pair(joints.at(i), std::make_pair(machine->getParkPosition().at(i), 2300)));
     }
 }
 
