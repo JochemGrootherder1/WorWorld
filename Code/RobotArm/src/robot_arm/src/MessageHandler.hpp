@@ -8,10 +8,6 @@
 #include <thread>
 #include <mutex>
 
-struct allowedAngles {
-
-};
-
 class MessageHandler {
     public:
         MessageHandler();
