@@ -17,3 +17,7 @@ Joint	Straight up	Ready	Park
 #3	1550		1400	700
 #4	2500		2500	2500
 #5	1550		1550	1550			
+
+
+#Straight up
+Base:1500;Shoulder:1500;Elbow:650;Wrist:1500;Gripper:2000;Wrist Rotate:1500

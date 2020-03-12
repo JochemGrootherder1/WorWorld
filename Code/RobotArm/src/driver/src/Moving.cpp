@@ -7,12 +7,12 @@
 
 std::map<unsigned short, std::pair<short, short>> PWMBoudaries = 
     {
-        {std::make_pair(0, std::make_pair(500, 2000))},
-        {std::make_pair(1, std::make_pair(500, 2000))},
+        {std::make_pair(0, std::make_pair(500, 2500))},
+        {std::make_pair(1, std::make_pair(800, 1833))},
         {std::make_pair(2, std::make_pair(500, 2000))},
-        {std::make_pair(3, std::make_pair(500, 2000))},
-        {std::make_pair(4, std::make_pair(500, 2000))},
-        {std::make_pair(5, std::make_pair(500, 2000))},
+        {std::make_pair(3, std::make_pair(500, 2500))},
+        {std::make_pair(4, std::make_pair(500, 2500))},
+        {std::make_pair(5, std::make_pair(500, 2500))},
     };
 
 
