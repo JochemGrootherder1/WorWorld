@@ -1,5 +1,6 @@
 #ifndef STATES_HPP
 #define STATES_HPP
+#include "ros/ros.h"
 #include "MessageSender.hpp"
 #include <array>
 #include <iostream>

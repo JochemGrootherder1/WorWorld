@@ -13,6 +13,9 @@ void Machine::setCurrentState(const std::shared_ptr<State>& aState)
 {
     // we check before every action if the other thread did set a stop sign
     currentState = aState;
+    std::ostringstream message;
+    message << "STATE: {" << currentState->getName() << "}";
+    ROS_INFO("%s", message.str().c_str());
     
     if(!stop)
         currentState->doActivity();

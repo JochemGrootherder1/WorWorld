@@ -21,7 +21,7 @@ std::map<std::string, std::pair<short, short>>& Message::getMessageContents() {
 void Message::updatePositions(std::array<unsigned short, 6>& newPositions, std::array<std::string, 6>& servoTypes) {
     messageContents.clear();
     for(std::size_t i = 0; i < newPositions.size(); i++) {
-        std::pair<std::string, std::pair<short, short> > position(servoTypes.at(i), std::make_pair<short, short>(convertDegreeToPWM(newPositions.at(i)), -1));
+        std::pair<std::string, std::pair<short, short> > position(servoTypes.at(i), std::make_pair<short, short>(newPositions.at(i), -1));
         addMessageContent(position);
     }
 }
