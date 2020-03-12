@@ -1,5 +1,7 @@
 #include "MessageHandler.hpp"
 #include <iostream>
+#include "ros/ros.h"
+#include <ros/console.h>
 
 MessageHandler::MessageHandler() : messageHandler(&MessageHandler::handleMessages, this), machine("config.txt"){
     machine.run();
@@ -30,13 +32,11 @@ void MessageHandler::parseMessage(const std::string& input) {
     char delimitter = ':';
     char commandSplitter = ';';
     std::size_t startPosition = 0;
-    std::size_t delimmiterPosition;
-    std::size_t commandEndPosition;
 
     while(!finished) {
         std::string inputToParse;
-        delimmiterPosition = input.find(delimitter, startPosition);
-        commandEndPosition = input.find(commandSplitter, startPosition);
+        std::size_t delimmiterPosition = input.find(delimitter, startPosition);
+        std::size_t commandEndPosition = input.find(commandSplitter, startPosition);
         bool toggleFirstValue = false;
         
         if(delimmiterPosition == std::string::npos && commandEndPosition == std::string::npos) {
@@ -70,6 +70,7 @@ void MessageHandler::parseMessage(const std::string& input) {
                             }
                         } else if (inputToParse == "EmergencyStop") {
                             // no message gets generated. The state machine will be set to emergency mode immediately
+                            ROS_DEBUG("EVENT: EmergencyStop");
                             machine.emergencyStop();
                         } else if (inputToParse == "Offset") {
                             if(!message.setMessageType(Config)) {
@@ -93,7 +94,7 @@ void MessageHandler::parseMessage(const std::string& input) {
                     }
                 }
                 if(currentValue == 0) {
-                    messageContent.second.first = std::stoi(inputToParse);
+                    messageContent.second.first = convertDegreeToPWM(std::stoi(inputToParse));
                     currentValue++;
                 } else {
                     messageContent.second.second = std::stoi(inputToParse);
@@ -123,12 +124,14 @@ void MessageHandler::handleMessages() {
         if(messages.size() > 0) {
             if(messages.front().getMessageType() == Position) {
                 std::cout << "position" << std::endl;
+                ROS_DEBUG("EVENT: move");
                 machine.move(messages.front().getMessageContents());   
                 messagesMutex.unlock();
                 // call position function
             } else if (messages.front().getMessageType() == PreprogrammedPosition) {
                 std::cout << "preprogrammed position" << std::endl;
                 updateMessagePositions(messages.front());
+                ROS_DEBUG("EVENT: moveToPreprogrammedPosition");
                 machine.move(messages.front().getMessageContents()); 
                 messagesMutex.unlock();  
             } else {
@@ -143,4 +146,10 @@ void MessageHandler::handleMessages() {
             messagesMutex.unlock();
         }
     }
+}
+
+
+short MessageHandler::convertDegreeToPWM(const short& degree) 
+{   
+    return int(float(degree+90) / 0.09) + 500;
 }

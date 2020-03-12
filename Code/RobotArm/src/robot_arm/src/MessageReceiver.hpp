@@ -6,7 +6,7 @@
 
 class MessageReceiver {
     public:
-        MessageReceiver(MessageHandler* messageHandler);
+        explicit MessageReceiver(MessageHandler* messageHandler);
         virtual ~MessageReceiver();
         void startServer();
         bool handleMessageReceived(robot_arm::ArmMessage::Request &req, robot_arm::ArmMessage::Response &res);

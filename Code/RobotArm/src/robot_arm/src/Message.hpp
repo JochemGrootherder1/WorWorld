@@ -19,8 +19,7 @@ class Message {
         void updatePositions(std::array<unsigned short, 6>& newPositions, std::array<std::string, 6>& servoTypes);
         std::map<std::string, std::pair<short, short>>& getMessageContents();
         bool setMessageType(MessageType type);
-        MessageType getMessageType();
-        short convertDegreeToPWM(const short& degree);
+        const MessageType getMessageType() const;
     private:
         MessageType messageType;
         std::map<std::string, std::pair<short, short>> messageContents;

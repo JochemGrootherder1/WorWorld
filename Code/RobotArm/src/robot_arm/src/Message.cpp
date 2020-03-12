@@ -34,11 +34,6 @@ bool Message::setMessageType(MessageType type) {
     return false;
 }
 
-MessageType Message::getMessageType() {
+const MessageType Message::getMessageType() const{
     return messageType;
-}
-
-short Message::convertDegreeToPWM(const short& degree) 
-{   
-    return int(float(degree+90) / 0.09) + 500;
 }

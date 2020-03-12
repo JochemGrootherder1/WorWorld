@@ -19,6 +19,7 @@ class MessageHandler {
         void updateMessagePositions(Message& message);
         void parseMessage(const std::string& input);
         void handleMessages();
+        static short convertDegreeToPWM(const short& degree);
 
     private:
         std::thread messageHandler;
