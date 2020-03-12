@@ -1,7 +1,6 @@
 #include "Moving.hpp"
 #include <sstream>
 #include <chrono>
-#include "Park.hpp"
 #include "Idle.hpp"
 #include "EmergencyStop.hpp"
 
@@ -16,10 +15,21 @@ std::map<unsigned short, std::pair<short, short>> PWMBoudaries =
     };
 
 
+Moving::Moving(Machine* machine) : State(machine)
+{
+    std::array<std::string, 6> joints = {"Base", "Shoulder", "Elbow", "Wrist", "Gripper", "Wrist Rotate"};
+    for(unsigned short i = 0; i < parkPosition.size(); ++i)
+    {
+        
+        positionToMoveTo.insert(std::make_pair(joints.at(i), std::make_pair(i, parkPosition.at(i))));
+    }
+}
+
 Moving::Moving(Machine* machine, std::map<std::string, std::pair< short, short>>& positions): State(machine), positionToMoveTo(positions)
 {
 
 }
+
 
 Moving::~Moving()
 {
@@ -77,17 +87,8 @@ void Moving::doActivity()
         }
         currentTime = std::clock();
     }
-
-    if(newPosition == parkPosition)
-    {
-        currentPosition = parkPosition;
-        machine->setCurrentState(std::make_shared<Park>(machine));
-    }
-    else
-    {
         currentPosition = newPosition;
         machine->setCurrentState(std::make_shared<Idle>(machine));
-    }
 }
 
 const std::string& Moving::getName()

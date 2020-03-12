@@ -6,6 +6,7 @@
 class Moving : public State
 {
     public:
+        Moving(Machine* machine);
         Moving(Machine* machine, std::map<std::string, std::pair<short, short>>& positions);
         virtual~ Moving();
         void doActivity();

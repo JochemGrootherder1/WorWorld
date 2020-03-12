@@ -1,8 +1,7 @@
 #include "Startup.hpp"
 #include <iostream>
 #include <fstream>
-#include "Calibrate.hpp"
-#include "Park.hpp"
+#include "Moving.hpp"
 
 Startup::Startup(Machine* machine, const std::string& inputFile) : State(machine), configFile(inputFile)
 {
@@ -63,13 +62,19 @@ void Startup::readConfiguration(const std::string& configFile)
                 parseLine(input);
             }
         }
-        machine->setCurrentState(std::make_shared<Park>(machine));
     }
     else
     {
-        machine->setCurrentState(std::make_shared<Calibrate>(machine, configFile));
+        /*
+        * FOUTMELDING OMDAT CONFIG NIET BESTAAT
+         */ 
     }
+
+    machine->setCurrentState(std::make_shared<Moving>(machine));
+    
+
 }
+
 
 
 const std::string& Startup::getName()
