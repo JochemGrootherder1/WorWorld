@@ -20,12 +20,13 @@ void Startup::doActivity()
 
 void Startup::parseLine(std::string line)
 {
+    std::cout << "line: " << line << std::endl;
     std::string delimiter = " ";
     size_t pos = 0;
     std::string token = "";
     std::string input = "";
     unsigned short count = 0;
-    while ((pos = line.find(delimiter) != std::string::npos))
+    while ((pos = line.find(delimiter)) != std::string::npos)
     {
         token = line.substr(0, pos);
         line.erase(0, pos + delimiter.length());
@@ -35,17 +36,19 @@ void Startup::parseLine(std::string line)
         }
         else if(input == "park")
         {
-            parkPosition[count] = std::stoi(token);
+            std::cout << "token: " << token << std::endl;
+        
+            machine->getParkPosition()[count] = std::stoi(token);
             ++count;
         }
         else if(input == "straightUp")
         {
-            straightUpPosition[count] = std::stoi(token);
+            machine->getStraightUpPosition()[count] = std::stoi(token);
             ++count;
         }
         else if(input == "ready")
         {
-            readyPosition[count] = std::stoi(token);
+            machine->getReadyPosition()[count] = std::stoi(token);
             ++count;
         }
     }

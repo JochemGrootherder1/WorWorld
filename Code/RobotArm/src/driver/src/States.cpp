@@ -68,6 +68,30 @@ bool Machine::getStop() {
     return stop;
 }
 
+
+std::array<unsigned short, 6>& Machine::getDefaultPosition(DefaultPositions defaultPosition) {
+    if(defaultPosition == ParkPosition) {
+        return parkPosition;
+    } else if (defaultPosition == ReadyPosition) {
+        return readyPosition;
+    } 
+    
+    return straightUpPosition;
+}
+
+std::array<unsigned short, 6>& Machine::getParkPosition() {
+    return parkPosition;
+}
+
+std::array<unsigned short, 6>& Machine::getStraightUpPosition() {
+    return straightUpPosition;
+}
+
+std::array<unsigned short, 6>& Machine::getReadyPosition() {
+    return readyPosition;
+}
+
+// class state
 void State::setFinished() {
     finished = true;
 }

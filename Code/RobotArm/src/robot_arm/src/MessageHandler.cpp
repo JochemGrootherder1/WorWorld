@@ -9,6 +9,18 @@ MessageHandler::~MessageHandler() {
 
 }
 
+void MessageHandler::updateMessagePositions(Message& message) {
+    for(std::size_t i = 0; i < message.getMessageContents().size(); i++) {
+        if(message.getMessageContents().find("Park") != message.getMessageContents().end()) {
+            message.updatePositions(machine.getDefaultPosition(ParkPosition), allowedServoTypes);
+        } else if (message.getMessageContents().find("Ready") != message.getMessageContents().end()) {
+            message.updatePositions(machine.getDefaultPosition(ReadyPosition), allowedServoTypes);
+        } else if (message.getMessageContents().find("Straight-up") != message.getMessageContents().end()) {
+            message.updatePositions(machine.getDefaultPosition(StraightPosition), allowedServoTypes);
+        }
+    }
+}
+
 void MessageHandler::parseMessage(const std::string& input) {
     Message message;
     std::pair<std::string, std::pair<short, short>> messageContent(std::string(), std::pair<short, short>(0, -1));
@@ -116,6 +128,8 @@ void MessageHandler::handleMessages() {
                 // call position function
             } else if (messages.front().getMessageType() == PreprogrammedPosition) {
                 std::cout << "preprogrammed position" << std::endl;
+                updateMessagePositions(messages.front());
+                machine.move(messages.front().getMessageContents()); 
                 messagesMutex.unlock();  
             } else {
                 messagesMutex.unlock();

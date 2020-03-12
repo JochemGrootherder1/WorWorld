@@ -7,6 +7,11 @@
 #include <list>
 #include <map>
 
+enum DefaultPositions {
+    ParkPosition,
+    StraightPosition,
+    ReadyPosition
+};
 
 class State;
 
@@ -27,11 +32,18 @@ class Machine
         std::string getCurrentState();
         MessageSender& getMessageSender();
         bool getStop();
+        std::array<unsigned short, 6>& getDefaultPosition(DefaultPositions defaultPosition);
+        std::array<unsigned short, 6>& getParkPosition();
+        std::array<unsigned short, 6>& getStraightUpPosition();
+        std::array<unsigned short, 6>& getReadyPosition();
     private:
         bool stop;
         MessageSender messageSender;
         std::string configFile ="";
         std::shared_ptr<State> currentState;
+        std::array<unsigned short, 6> parkPosition;
+        std::array<unsigned short, 6> straightUpPosition;
+        std::array<unsigned short, 6> readyPosition;
 };
 
 class State
@@ -42,14 +54,11 @@ class State
         virtual void doActivity() = 0; 
         virtual const std::string& getName() = 0;
         bool getFinished();
-        void setFinished();    
+        void setFinished();
     protected:
         Machine* machine;
         bool finished = false;
         std::array<unsigned short, 6> currentPosition;
-        std::array<unsigned short, 6> parkPosition;
-        std::array<unsigned short, 6> straightUpPosition;
-        std::array<unsigned short, 6> readyPosition;
         std::array<unsigned short, 6> newPosition;
 };
 

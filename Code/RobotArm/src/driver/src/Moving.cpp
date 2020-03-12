@@ -78,9 +78,9 @@ void Moving::doActivity()
         currentTime = std::clock();
     }
 
-    if(newPosition == parkPosition)
+    if(newPosition == machine->getParkPosition())
     {
-        currentPosition = parkPosition;
+        currentPosition = machine->getParkPosition();
         machine->setCurrentState(std::make_shared<Park>(machine));
     }
     else
