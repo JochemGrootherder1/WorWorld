@@ -17,7 +17,7 @@ class Startup : public State
     private:
         std::string name = "startUp";
         std::string configFile;
-
+        std::vector<std::pair<short, short> > offsets;
 };
 
 #endif

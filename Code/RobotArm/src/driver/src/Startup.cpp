@@ -15,6 +15,13 @@ Startup::~Startup()
 void Startup::doActivity()
 {
     readConfiguration(configFile);
+    for(std::size_t i = 0; i < offsets.size(); i++) {
+        std::ostringstream offset;
+        offset << "#" << offsets.at(i).first << " PO " << offsets.at(i).second;
+        std::cout << "setting offset: " << offset.str() << std::endl;
+        machine->getMessageSender().sendMessage(offset.str());
+    }
+    machine->setCurrentState(std::make_shared<Moving>(machine));
 }
 
 void Startup::parseLine(std::string line)
@@ -24,6 +31,7 @@ void Startup::parseLine(std::string line)
     size_t pos = 0;
     std::string token = "";
     std::string input = "";
+    std::pair<short, short> offset;
     unsigned short count = 0;
     while ((pos = line.find(delimiter)) != std::string::npos)
     {
@@ -49,6 +57,15 @@ void Startup::parseLine(std::string line)
         {
             machine->getReadyPosition()[count] = std::stoi(token);
             ++count;
+        } else if(input == "offset") {
+            int value = std::stoi(token);
+            if(count == 0) {
+                offset.first = value;
+                count++;
+            } else if (count == 1) {
+                offset.second = value;
+                offsets.push_back(offset);
+            }
         }
     }
 }
@@ -71,10 +88,7 @@ void Startup::readConfiguration(const std::string& configFile)
         /*
         * FOUTMELDING OMDAT CONFIG NIET BESTAAT
          */ 
-    }
-
-    machine->setCurrentState(std::make_shared<Moving>(machine));
-    
+    }    
 
 }
 
