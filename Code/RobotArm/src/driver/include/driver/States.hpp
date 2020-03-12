@@ -14,7 +14,7 @@ class Machine
 {
     public:
         Machine(const std::string& file);
-        void setCurrentState(std::shared_ptr<State> aState);
+        void setCurrentState(const std::shared_ptr<State>& aState);
         void run();
         /**
          * @brief 
@@ -25,8 +25,11 @@ class Machine
         void emergencyStop();
         void turnOff();
         std::string getCurrentState();
-        MessageSender messageSender;
+        MessageSender& getMessageSender();
+        bool getStop();
     private:
+        bool stop;
+        MessageSender messageSender;
         std::string configFile ="";
         std::shared_ptr<State> currentState;
 };
@@ -37,9 +40,12 @@ class State
         State(Machine* aMachine) : machine(aMachine){}
         virtual ~State(){}
         virtual void doActivity() = 0; 
-        virtual const std::string& getName() = 0;    
+        virtual const std::string& getName() = 0;
+        bool getFinished();
+        void setFinished();    
     protected:
         Machine* machine;
+        bool finished = false;
         std::array<unsigned short, 6> currentPosition;
         std::array<unsigned short, 6> parkPosition;
         std::array<unsigned short, 6> straightUpPosition;

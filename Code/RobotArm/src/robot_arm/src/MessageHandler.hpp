@@ -2,6 +2,7 @@
 #define MESSAGEHANDLER_HPP
 
 #include "Message.hpp"
+#include "driver/States.hpp"
 #include <queue>
 #include <array>
 #include <thread>
@@ -31,6 +32,7 @@ class MessageHandler {
         std::array<std::string, NR_OF_OTHER_MESSAGE_TYPES> allowedMessageTypes {
             "Park", "Ready", "Straight-up", "EmergencyStop", "Offset"
         };
+        Machine machine;
 };
 
 #endif

@@ -1,9 +1,8 @@
 #include "MessageHandler.hpp"
-#include "driver/States.hpp"
 #include <iostream>
 
-MessageHandler::MessageHandler() : messageHandler(&MessageHandler::handleMessages, this){
-
+MessageHandler::MessageHandler() : messageHandler(&MessageHandler::handleMessages, this), machine("config.txt"){
+    machine.run();
 }
 
 MessageHandler::~MessageHandler() {
@@ -58,9 +57,8 @@ void MessageHandler::parseMessage(const std::string& input) {
                                 return;
                             }
                         } else if (inputToParse == "EmergencyStop") {
-                            if(!message.setMessageType(EmergencyStop)) {
-                                return;
-                            }
+                            // no message gets generated. The state machine will be set to emergency mode immediately
+                            machine.emergencyStop();
                         } else if (inputToParse == "Offset") {
                             if(!message.setMessageType(Config)) {
                                 return;
@@ -113,15 +111,12 @@ void MessageHandler::handleMessages() {
         if(messages.size() > 0) {
             if(messages.front().getMessageType() == Position) {
                 std::cout << "position" << std::endl;
+                machine.move(messages.front().getMessageContents());   
                 messagesMutex.unlock();
                 // call position function
             } else if (messages.front().getMessageType() == PreprogrammedPosition) {
                 std::cout << "preprogrammed position" << std::endl;
-                messagesMutex.unlock();
-            } else if(messages.front().getMessageType() == EmergencyStop) {
-                std::cout << "emergency stop" << std::endl;
-                messagesMutex.unlock();
-                
+                messagesMutex.unlock();  
             } else {
                 messagesMutex.unlock();
             }

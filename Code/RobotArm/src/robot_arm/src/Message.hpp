@@ -8,7 +8,6 @@ enum MessageType {
     None,
     Position,
     Config,
-    EmergencyStop,
     PreprogrammedPosition
 };
 
@@ -17,7 +16,7 @@ class Message {
         Message();
         virtual ~Message();
         void addMessageContent(const std::pair<std::string, std::pair<short, short> >& values);
-        const std::map<std::string, std::pair<short, short>>& getMessageContents() const;
+        std::map<std::string, std::pair<short, short>>& getMessageContents();
         bool setMessageType(MessageType type);
         MessageType getMessageType();
     private:

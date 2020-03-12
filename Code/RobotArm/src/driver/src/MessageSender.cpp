@@ -3,7 +3,7 @@
 #include <boost/asio.hpp>
 #include <thread>
 
-MessageSender::MessageSender() : serial(ioservice, "/dev/pts/3") {
+MessageSender::MessageSender() : serial(ioservice, "/dev/ttyUSB1") {
 
 	serial.set_option(boost::asio::serial_port_base::baud_rate(9600));
 	serial.set_option(boost::asio::serial_port::flow_control(boost::asio::serial_port::flow_control::none));
@@ -23,6 +23,7 @@ void MessageSender::sendMessage(const std::string& message) {
     boost::asio::streambuf b;
     std::ostream os(&b);
     os << message << "\n\r";
+    std::cout << message << std::endl;
     boost::asio::write(serial, b.data());
     os.flush();
 }

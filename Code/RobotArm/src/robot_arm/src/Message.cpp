@@ -14,7 +14,7 @@ void Message::addMessageContent(const std::pair<std::string, std::pair<short, sh
     messageContents.insert(values);
 }
 
-const std::map<std::string, std::pair<short, short>>& Message::getMessageContents() const {
+std::map<std::string, std::pair<short, short>>& Message::getMessageContents() {
     return messageContents;
 }
 
