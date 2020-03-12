@@ -20,6 +20,7 @@ class Message {
         std::map<std::string, std::pair<short, short>>& getMessageContents();
         bool setMessageType(MessageType type);
         MessageType getMessageType();
+        short convertDegreeToPWM(const short& degree);
     private:
         MessageType messageType;
         std::map<std::string, std::pair<short, short>> messageContents;
