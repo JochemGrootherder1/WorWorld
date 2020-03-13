@@ -6,23 +6,13 @@ left to right direction
 
 state Startup
 Startup : Entry /
-Startup : Do / "Initialiseer (read configuration)"
+Startup : Do / "read configuration"
 Startup : Exit /
 
 state Moving
 Moving : Entry /
 Moving : Do / "moveToPosition(newPosition)"
-Moving : Exit/ "Check current position"
-
-state Calibrate
-Calibrate : Entry / 
-Calibrate : Do / "calibrate"
-Calibrate : Exit / "Check current position"
-
-state Park
-Park : Entry /
-Park : Do / "Move to park position"
-Park : Exit /
+Moving : Exit/
 
 state Idle
 Idle : Entry /
@@ -36,25 +26,15 @@ emergencyStop : Exit /
 
 
 [*] --> Startup
-Startup -> Calibrate : [configFound == false] calibrate
-Startup -> Park : [configFound == true] park
-Park ---> Moving : move 
-Moving --> Idle : [currentPosition == newPosition] idle
-Moving --> Park : [currentPosition == parkPosition] park
+Startup --> Moving : moveToPark
+Moving --> Idle : [currentTime >= timeToMove] idle
 Idle --> Moving : move
-Idle --> Park : moveToPark
-Calibrate --> Moving : move
-Moving --> Calibrate : [currentPosition == calibrationPosition] calibrate
-Calibrate --> Park : [calibrated == true && currentPosition == parkPosition] park
 
-Calibrate --> emergencyStop : emergencyStop
 Startup --> emergencyStop : emergencyStop
 Idle --> emergencyStop : emergencyStop
 Moving --> emergencyStop : emergencyStop
-Park --> emergencyStop : emergencyStop
 
-emergencyStop -> [*] : stop
-Park --> [*] : stop
+emergencyStop -> [*]
 
 @enduml
 

@@ -1,7 +1,7 @@
 #include "MessageReceiver.hpp"
 #include "ros/ros.h"
 
-MessageReceiver::MessageReceiver() {
+MessageReceiver::MessageReceiver(MessageHandler* messageHandler) : messageHandler(messageHandler) {
 
 }
 
@@ -9,14 +9,15 @@ MessageReceiver::~MessageReceiver() {
 
 }
 
-bool handleMessageReceived(robot_arm::ArmMessage::Request &req, robot_arm::ArmMessage::Response &res) {
-
+bool MessageReceiver::handleMessageReceived(robot_arm::ArmMessage::Request &req, robot_arm::ArmMessage::Response &res) {
+    messageHandler->parseMessage(req.message);
+    return true;
 }
 
 void MessageReceiver::startServer() {
     ros::NodeHandle n;
 
-    ros::ServiceServer service = n.advertiseService("add_two_ints", handleMessageReceived);
-    ROS_INFO("Ready to add two ints.");
+    ros::ServiceServer service = n.advertiseService("messages", &MessageReceiver::handleMessageReceived, this);
+    
     ros::spin();
 }

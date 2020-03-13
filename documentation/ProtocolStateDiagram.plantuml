@@ -7,20 +7,12 @@ endheader
 left to right direction
 State Moving
 State Idle
-State Park
 State EmergencyStop
 
-[*]-> Park : [configFound == true] done
-[*]-> Calibrate : [configFound =false] done
-Park --> Moving : move
-Moving --> Idle : [currentPosition == newPosition] positionReached [moving == false]
-Calibrate --> Moving : move
-Moving --> Calibrate : [currentPosition == calibratePosition] positionReached 
-Calibrate --> Park : [initialized == true] park
-Park --> EmergencyStop : emergencyStop
+[*]-> Moving : moveToPark
+Moving --> Idle : [currentTime >= timeToMove] positionReached 
 Moving --> EmergencyStop : emergencyStop
 Idle --> EmergencyStop : emergencyStop
 
-Park --> [*] :  turnOff
-EmergencyStop --> [*] : stop
+EmergencyStop --> [*]
 @enduml
