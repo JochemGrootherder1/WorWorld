@@ -37,6 +37,7 @@ class Machine
         std::array<unsigned short, 6>& getParkPosition();
         std::array<unsigned short, 6>& getStraightUpPosition();
         std::array<unsigned short, 6>& getReadyPosition();
+        const std::map<unsigned short, std::pair<short, short>>& getPWMBoundaries() const;
     private:
         bool stop;
         MessageSender messageSender;
@@ -45,6 +46,15 @@ class Machine
         std::array<unsigned short, 6> parkPosition;
         std::array<unsigned short, 6> straightUpPosition;
         std::array<unsigned short, 6> readyPosition;
+        std::map<unsigned short, std::pair<short, short>> PWMBoundaries = 
+        {
+            {std::make_pair(0, std::make_pair(500, 2500))},
+            {std::make_pair(1, std::make_pair(800, 1833))},
+            {std::make_pair(2, std::make_pair(500, 2000))},
+            {std::make_pair(3, std::make_pair(500, 2500))},
+            {std::make_pair(4, std::make_pair(500, 2500))},
+            {std::make_pair(5, std::make_pair(500, 2500))},
+        };
 };
 
 class State

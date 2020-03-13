@@ -4,17 +4,6 @@
 #include "Idle.hpp"
 #include "EmergencyStop.hpp"
 
-std::map<unsigned short, std::pair<short, short>> PWMBoudaries = 
-    {
-        {std::make_pair(0, std::make_pair(500, 2500))},
-        {std::make_pair(1, std::make_pair(800, 1833))},
-        {std::make_pair(2, std::make_pair(500, 2000))},
-        {std::make_pair(3, std::make_pair(500, 2500))},
-        {std::make_pair(4, std::make_pair(500, 2500))},
-        {std::make_pair(5, std::make_pair(500, 2500))},
-    };
-
-
 Moving::Moving(Machine* machine) : State(machine)
 {
     std::array<std::string, 6> joints = {"Base", "Shoulder", "Elbow", "Wrist", "Gripper", "Wrist Rotate"};
@@ -35,10 +24,10 @@ Moving::~Moving()
 
 }
 
-unsigned short Moving::checkPWM(const unsigned short& joint,const short& PWM)
+unsigned short Moving::checkPWM(unsigned short joint, short PWM)
 {
-    if(PWMBoudaries.at(joint).first > PWM) return PWMBoudaries.at(joint).first;
-    else if(PWMBoudaries.at(joint).second < PWM) return PWMBoudaries.at(joint).second;
+    if(machine->getPWMBoundaries().at(joint).first > PWM) return machine->getPWMBoundaries().at(joint).first;
+    else if(machine->getPWMBoundaries().at(joint).second < PWM) return machine->getPWMBoundaries().at(joint).second;
     return PWM;
 }
 

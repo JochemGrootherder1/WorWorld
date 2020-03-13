@@ -12,7 +12,7 @@ class Moving : public State
         void doActivity();
         std::string inputToCommand();
         const std::string& getName();
-        unsigned short checkPWM(const unsigned short& joint, const short& PWM);
+        unsigned short checkPWM(unsigned short joint, short PWM);
     private:
         std::string name = "moving";
         std::map<std::string, std::pair<short, short>> positionToMoveTo;

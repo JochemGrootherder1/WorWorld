@@ -94,7 +94,7 @@ void MessageHandler::parseMessage(const std::string& input) {
                     }
                 }
                 if(currentValue == 0) {
-                    messageContent.second.first = convertDegreeToPWM(std::stoi(inputToParse));
+                    messageContent.second.first = std::stoi(inputToParse);
                     currentValue++;
                 } else {
                     messageContent.second.second = std::stoi(inputToParse);
@@ -124,6 +124,7 @@ void MessageHandler::handleMessages() {
         if(messages.size() > 0) {
             if(messages.front().getMessageType() == Position) {
                 std::cout << "position" << std::endl;
+                messages.front().convertDegreeToPWM(machine);
                 ROS_DEBUG("EVENT: move");
                 machine.move(messages.front().getMessageContents());   
                 messagesMutex.unlock();
@@ -146,10 +147,4 @@ void MessageHandler::handleMessages() {
             messagesMutex.unlock();
         }
     }
-}
-
-
-short MessageHandler::convertDegreeToPWM(const short& degree) 
-{   
-    return int(float(degree+90) / 0.09) + 500;
 }
