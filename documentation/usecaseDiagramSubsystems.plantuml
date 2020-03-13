@@ -39,4 +39,13 @@ MotionPlanner --> (Set position)
 (Send message) <.. (Move to position) : Extends
 (Send message) <.. (Save offset) : Extends
 (Send message) <.. (Emergency stop ) : Extends
+note right of (Move to position){
+    <SAaction> {SArelDeadline = 2.3, 's'}
+    <SAaction> {laxity = soft}
+}
+
+note right of (Emergency stop ){
+    <SAaction> {SAabsDeadline = 0.1, 's'}
+    <SAaction> {laxity = hard}
+}
 @enduml
