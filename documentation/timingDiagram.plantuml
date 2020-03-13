@@ -1,0 +1,48 @@
+@startuml
+scale 100 as 50 pixels
+robust "Robot Arm" as RobotArm
+robust "Low level driver" as LowLevelDriver
+robust "MessageHandler" as MessageHandler
+robust "Ros Node" as RosNode
+concise "Motion Planner" as MotionPlanner
+
+LowLevelDriver@120 <-> @2300 : {time given in call 0 ... 2300}
+
+@0
+RobotArm is Idle
+LowLevelDriver is Idle
+MessageHandler is Idle
+RosNode is Idle
+MotionPlanner is Busy
+MotionPlanner -> RosNode@100 : Sending message
+
+@100
+RosNode is processingMessage
+
+@110
+RosNode -> MotionPlanner@200 : response
+RosNode is Idle
+MessageHandler is HandlingMessage
+
+@115
+MessageHandler is Idle
+MessageHandler -> LowLevelDriver : Call driver with message
+LowLevelDriver is ProcessingCall
+
+@120
+LowLevelDriver is MovingState
+LowLevelDriver -> RobotArm@220 : Send message to RobotArm
+
+@200
+MotionPlanner is Idle
+
+@220
+RobotArm is Moving
+
+@2300
+RobotArm is Idle
+LowLevelDriver is Idle
+
+
+
+@enduml
