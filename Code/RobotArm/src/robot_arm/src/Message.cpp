@@ -54,9 +54,9 @@ void Message::convertDegreeToPWM(Machine& machine)
             degrees = (-1 * degreesBoudaries.at(servo).first) - (-1 * degrees);
         }
         
-        short pwm2 = round(multiplier * degrees + machine.getPWMBoundaries().at(servo).first);
-        std::cout << pwm2 << std::endl;
-        it->second.first = pwm2;
+        short pwm = round(multiplier * degrees + machine.getPWMBoundaries().at(servo).first);
+        std::cout << pwm << std::endl;
+        it->second.first = pwm;
     }
 }
 
