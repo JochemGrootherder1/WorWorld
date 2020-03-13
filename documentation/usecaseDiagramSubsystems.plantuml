@@ -19,7 +19,7 @@ rectangle HighLevelDriver{
     (Display information)
 }
 
-rectangle robotArm{
+rectangle RobotArm{
     (Move to position)
     (Save offset)
     (Emergency stop )

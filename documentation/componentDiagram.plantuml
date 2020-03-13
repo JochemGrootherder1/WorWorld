@@ -8,15 +8,13 @@ left to right direction
 
 
 component rosnode{
-    component highLevelInterface
-    [highLevelInterface] --( Action
-    [highLevelInterface] -- IAction
+    component HighLevelInterface
+    [HighLevelInterface] -- [Driver]
+    [HighLevelInterface] -- IAction
     
-    component driver
-    [driver] -- Action
 
 }
-    driver --( IArmAction
+    [Driver] --( IArmAction
 component robotArm{
 }
     robotArm -- IArmAction
