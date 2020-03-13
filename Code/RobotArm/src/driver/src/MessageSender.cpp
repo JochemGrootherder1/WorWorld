@@ -3,7 +3,7 @@
 #include <boost/asio.hpp>
 #include <thread>
 
-MessageSender::MessageSender() : serial(ioservice, "/dev/ttyUSB5") {
+MessageSender::MessageSender() : serial(ioservice, "/dev/ttyUSB0") {
 
 	serial.set_option(boost::asio::serial_port_base::baud_rate(9600));
 	serial.set_option(boost::asio::serial_port::flow_control(boost::asio::serial_port::flow_control::none));

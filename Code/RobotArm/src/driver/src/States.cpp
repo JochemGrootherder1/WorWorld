@@ -92,6 +92,10 @@ std::array<unsigned short, 6>& Machine::getReadyPosition() {
     return readyPosition;
 }
 
+const std::map<unsigned short, std::pair<short, short>>& Machine::getPWMBoundaries() const {
+    return PWMBoundaries;
+}
+
 // class state
 void State::setFinished() {
     finished = true;
