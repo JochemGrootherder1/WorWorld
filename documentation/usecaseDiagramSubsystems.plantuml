@@ -9,23 +9,22 @@ Actor MotionPlanner
 
 rectangle Driver{
     (Check message) <. (Send message) : Extends
+    (Display information )
+    (Set offset)
 }
 
 rectangle HighLevelDriver{
     (Set position) .> (Set time) : extends
     (Set preprogrammed position)
     (Emergency stop)
-    (Set offset)
     (Display information)
 }
 
-rectangle RobotArm{
+rectangle robotArm{
     (Move to position)
-    (Save offset)
     (Emergency stop )
 }
 
-User --> (Set offset)
 User --> (Emergency stop)
 MotionPlanner --> (Set preprogrammed position)
 MotionPlanner --> (Set position)
@@ -34,18 +33,24 @@ MotionPlanner --> (Set position)
 (Emergency stop) --> (Send message)
 (Set position) --> (Check message)
 (Set preprogrammed position) --> (Send message)
-(Set offset) --> (Check message)
 
+(Send message) <. (Set offset) : Extends
 (Send message) <.. (Move to position) : Extends
-(Send message) <.. (Save offset) : Extends
 (Send message) <.. (Emergency stop ) : Extends
 note right of (Move to position){
     <SAaction> {SArelDeadline = 2.3, 's'}
     <SAaction> {laxity = soft}
+    
+    (Required Distance range = (zie beschrijving)}
+    {Offered Distance range = (zie beschrijving)}
 }
 
 note right of (Emergency stop ){
     <SAaction> {SAabsDeadline = 0.1, 's'}
     <SAaction> {laxity = hard}
+}
+
+note right of (Set offset){
+    {Offset range = [-100ms, 100ms]}
 }
 @enduml
